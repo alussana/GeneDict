@@ -1,0 +1,4 @@
+.nextflow*
+flowchart.svg.*
+*.sif
+*.bck

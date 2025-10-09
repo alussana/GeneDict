@@ -1,0 +1,30 @@
+# Use the latest Debian base image
+FROM debian:bookworm-slim
+
+# Set environment variables
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PYTHONUNBUFFERED=1
+ENV PIP_BREAK_SYSTEM_PACKAGES=1
+
+# Update package list and install system dependencies
+RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-pip \
+    python3-dev \
+    build-essential \
+    pkg-config \
+    wget \
+    curl \
+    zip \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create a symbolic link for python
+RUN ln -s /usr/bin/python3 /usr/bin/python
+
+# Upgrade pip to the latest version
+RUN python3 -m pip install --upgrade pip
+
+# Install python packages
+RUN python3 -m pip install \
+    numpy==2.1.3 \
+    pandas==2.2.3 \
