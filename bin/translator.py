@@ -42,12 +42,11 @@
 
 import sys
 import pandas as pd
-import math
 
 
 def translateWord(word: str, word_dict: pd.DataFrame, from_col=1, to_col=2):
     trs = word_dict.loc[word_dict[from_col - 1] == word,][to_col - 1]
-    if len(trs) == 0 or math.isnan(tr_word):
+    if len(trs) == 0:
         return None
     else:
         return trs.values[0]
@@ -68,7 +67,8 @@ def main():
         except:
             translate_on = [int(translate_on)]
 
-    word_dict = pd.read_csv(dict_file, sep="\t", header=None)
+    word_dict = pd.read_csv(dict_file, sep="\t", header=None).astype('string')
+    word_dict = word_dict.dropna()
 
     if translate_on != "all":
         with open(target_file, "r") as target_fh:
